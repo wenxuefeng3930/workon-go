@@ -1,6 +1,9 @@
 .PHONY: install uninstall test clear
 install: clear
-	@/bin/bash ./script/setup.sh
+	@echo "install..."
+	@go build -o workon.tool && mv workon.tool ~/.config/workon/
+	@cp -f workon.sh ~/.config/workon/
+	@echo "Ok"
 
 uninstall: clear
 	@rm -rf ~/.config/workon/workon.yml
@@ -21,8 +24,4 @@ test: clear
 	@echo "Ok"
 
 clear:
-	@rm -rf ~/.config/workon/workon.tool
-	@rm -rf ~/.config/workon/workon.sh
-
-clearAll: clear
 	@rm -rf ~/.config/workon/*

@@ -58,7 +58,7 @@ function __call_workon_tool() {
         $WORKON_TOOL
     elif [[ $1 != -* && $# -eq 1 ]];then
         # 通过退出码进行通信
-        TOOL_RESULT=$($WORKON_TOOL $@)
+        TOOL_RESULT=$($WORKON_TOOL -get $@)
         if [[ $? -eq 0 ]];then
             # 设置虚拟环境名称和路径
             ENVNAME=$1
@@ -91,12 +91,11 @@ function __completeWorkon(){
     fi
     if [[ $compCWORD == -* && $compCWORD != "" ]];then
         options=(
-            -c
-            -d
-            -i
+            -clean
+            -delete
             -h
-            -s
-            --show
+            -set
+            -show
         )
        opts="$(printf "%s\n" ${options[@]})"
     fi

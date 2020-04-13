@@ -65,15 +65,20 @@ func newArgsMap() argsmap {
 }
 
 func set() {
-	if project := projects[setArg]; project == "" {
-		projects[setArg], _ = os.Getwd()
+	// 配置不存在这创建0值
+	if settings.Projects == nil {
+		settings.Projects = make(map[string]string)
 	}
+	if _, ok := projects[setArg]; ok == true {
+		delete(projects, setArg)
+	}
+	settings.Projects[setArg], _ = os.Getwd()
 	saveConfig()
 	fmt.Println("映射完成")
 }
 
 func remove() {
-	if project := projects[removeArg]; project == "" {
+	if _, ok := projects[removeArg]; ok == false {
 		fmt.Println("映射不存在")
 		os.Exit(configNotFound)
 	}
