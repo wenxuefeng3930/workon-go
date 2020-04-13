@@ -1,7 +1,14 @@
 # workon
 Python虚拟环境切换工具
 
-## ttt
+## 安装
 
-workon -l 显示全部
-workon envName 进入虚拟环境
+推荐以下命令安装：
+
+        curl -sSL https://raw.githubusercontent.com/zzhaolei/workon/master/scripts/install.sh | sh
+
+手动安装:
+
+        git clone https://github.com/zzhaolei/workon.git workon
+        cd workon
+        make

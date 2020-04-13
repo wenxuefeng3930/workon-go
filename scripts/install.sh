@@ -1,9 +1,10 @@
 #!/bin/bash
 APP_NAME=workon # 应用名称
+CONFIG_DIR=.config/$APP_NAME
+WORKON_CONFIG_DIR=$HOME/$CONFIG_DIR # 配置所在目录
 BIN_DIR=$WORKON_CONFIG_DIR # 二进制脚本工作目录
 CUR_PATH=$(pwd) # 当前目录
 TMP_DIR=/tmp/$APP_NAME # 临时目录
-WORKON_CONFIG_DIR=$HOME/.config/$APP_NAME # 配置所在目录
 SHELL_FILES=($HOME/.zshrc $HOME/.bashrc) # shell的配置文件
 
 RELATIVE_PATH=.config/workon
@@ -28,6 +29,7 @@ if [[ $? -ne 0 ]];then
     exit 1
 fi
 
+__colorPrint "正在安装workon，请稍候..."
 # 检测是否存在workon配置目录
 if [[ ! -d $WORKON_CONFIG_DIR ]];then
     mkdir -p $WORKON_CONFIG_DIR > /dev/null 2>&1
@@ -43,11 +45,10 @@ exit_code=$?
 # 清理现场
 cd $CUR_PATH
 rm -rf $TMP_DIR > /dev/null 2>&1
-
 # 写入文件
-for shellFile in ${$SHELL_FILES[@]};do
+for shellFile in $SHELL_FILES;do
     # 检查shell rc文件中是否有相应的配置
-    shellConfig=$(cat $shellFile | grep -v "grep" | grep "$WORKON_CONFIG_DIR")
+    shellConfig=$(cat $shellFile | grep -v "grep" | grep "$CONFIG_DIR")
     if [[ $shellConfig == "" || $(echo $shellConfig | wc -l) -eq 0 ]];then
         __colorPrint "$shellFile 中配置不存在，开始写入..."
         shellComplete=$(cat $shellFile | grep -v "grep" | grep "^autoload bashcompinit" | wc -l)
@@ -64,7 +65,6 @@ for shellFile in ${$SHELL_FILES[@]};do
         __colorPrint "配置写入 $shellFile 成功"
     fi
 done
-
 
 # 输出结果
 if [[ $exit_code -ne 0 ]];then

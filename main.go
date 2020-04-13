@@ -178,5 +178,7 @@ func main() {
 		args.clean()
 	} else if getPathArg != "" {
 		args.getPath()
+	} else {
+		flag.Usage()
 	}
 }
