@@ -103,10 +103,9 @@ func show() {
 //
 func getPath() {
 	project := projects[getPathArg]
-	if project == "" {
-		os.Exit(4)
+	if project != "" {
+		fmt.Println(project)
 	}
-	fmt.Println(project)
 }
 
 // 保存配置
