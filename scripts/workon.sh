@@ -92,7 +92,7 @@ function __completeWorkon(){
     if [[ $compCWORD == -* && $compCWORD != "" ]];then
         options=(
             -clean
-            -delete
+            -remove
             -h
             -set
             -show
