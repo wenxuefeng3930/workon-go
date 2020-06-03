@@ -15,7 +15,10 @@ function workon
             set TOOL_RESULT ($WORKON_TOOL --get $argv[1])
             if test $status -eq 0
                 conda activate $argv[1]
-                cd $TOOL_RESULT > /dev/null 2>&1
+                if test -z $TOOL_RESULT
+                    return
+                end
+                cd $TOOL_RESULT
             end
     end
 end
